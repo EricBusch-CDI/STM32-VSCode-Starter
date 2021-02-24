@@ -37,6 +37,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define DEFAULT_TIMEOUT (100)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -105,10 +106,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     uint8_t read = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
     snprintf(buf, buf_size, "%u\r\n", read);
-    HAL_UART_Transmit(&huart2, (uint8_t*)buf, buf_size, 100);
+    HAL_UART_Transmit(&huart2, (uint8_t *)buf, buf_size, DEFAULT_TIMEOUT);
+    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     HAL_Delay(500);
     /* USER CODE END WHILE */
 
