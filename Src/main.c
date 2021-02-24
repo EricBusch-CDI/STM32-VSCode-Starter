@@ -22,6 +22,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 /* USER CODE END Includes */
 
@@ -36,7 +41,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define nullStr(str, size) memset(str, '\0', size)
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -67,6 +72,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+  const uint8_t buf_size = 10;
+  char buf[buf_size];
+  nullStr(buf, buf_size);
 
   /* USER CODE END 1 */
 
@@ -98,6 +106,9 @@ int main(void)
   while (1)
   {
     HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    uint8_t read = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
+    snprintf(buf, buf_size, "%u\r\n", read);
+    HAL_UART_Transmit(&huart2, (uint8_t*)buf, buf_size, 100);
     HAL_Delay(500);
     /* USER CODE END WHILE */
 
